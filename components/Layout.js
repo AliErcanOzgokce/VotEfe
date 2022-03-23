@@ -14,6 +14,7 @@ export default (props) => {
         />
       </Head>
       <Header />
+      <hr />
       {props.children}
     </Container>
   );

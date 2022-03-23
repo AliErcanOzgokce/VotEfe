@@ -4,11 +4,11 @@ import { Link } from "../routes";
 
 export default () => {
   return (
-    <Header as="h1" style={{ marginTop: "20px" }}>
+    <Header as="h1" style={{ marginTop: "30px" }} >
       <Icon name="fire" />
       <Header.Content>
         <Link route="/">
-          <a className="item" >VotEfe</a>
+          <a className="item">VotEfe</a>
         </Link>
       </Header.Content>
     </Header>
