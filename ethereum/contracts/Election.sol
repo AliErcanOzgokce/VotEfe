@@ -1,21 +1,30 @@
 pragma solidity ^0.4.17;
+pragma experimental ABIEncoderV2;
 
 contract ElectionFactory {
     address[] public deployedElections;
+    string[] public deployedElectionNames;
 
     function createElection(string name, uint count) public {
         address newElection = new Election(name, count, msg.sender);
+        string memory electionNames = name;
 
+        deployedElectionNames.push(electionNames);
         deployedElections.push(newElection);
     }
 
     function getDeployedElections() public view returns(address[]) {
         return deployedElections;
     }
+
+    function getDeployedElectionNames() public view returns(string[]) {
+        return deployedElectionNames;
+    }
+
 }
 
 contract Election {
-    struct Candidates {
+    struct Canditates {
         string description;
         string name;
         string partyName;
@@ -24,10 +33,10 @@ contract Election {
         mapping(address => bool) voters;
     }
 
-    Candidates[] public candidates;
+    Canditates[] public canditates;
     string public electionName;
     mapping(address => uint) public avaibleVote;
-    uint public candidatesCount;
+    uint public canditatesCount;
     address public manager;
     uint public votersCount;
     mapping(address => bool) public voters;
@@ -37,15 +46,15 @@ contract Election {
         _;
     }
 
-    modifier candidatesLimit() {
-        require (candidates.length == candidatesCount);
+    modifier canditatesLimit() {
+        require (canditates.length == canditatesCount);
         _;
     }
 
     function Election (string name, uint count, address creator) public {
         manager = creator;
         electionName = name;
-        candidatesCount = count;
+        canditatesCount = count;
     }
 
     function register () public {
@@ -58,9 +67,9 @@ contract Election {
         votersCount++;
     }
 
-    function createCanditate (string name, string partyName, string description) public restricted  {
-        require(!(candidates.length>=candidatesCount));
-        Candidates memory newCanditate = Candidates({
+    function createCantitate (string name, string partyName, string description) public restricted  {
+        require(!(canditates.length>=canditatesCount));
+        Canditates memory newCanditate = Canditates({
             description: description,
             name: name,
             partyName: partyName,
@@ -68,26 +77,26 @@ contract Election {
             votingCounts: 0
         });
 
-        candidates.push(newCanditate);
+        canditates.push(newCanditate);
     }
 
     function voteCanditate (uint index) public {
-        Candidates storage candidate = candidates[index];
+        Canditates storage canditate = canditates[index];
 
         require(voters[msg.sender]);
-        require(!candidate.voters[msg.sender]);
+        require(!canditate.voters[msg.sender]);
 
-        candidate.voters[msg.sender] = true;
+        canditate.voters[msg.sender] = true;
         avaibleVote[msg.sender] = 2;
-        candidate.votingCounts++;
+        canditate.votingCounts++;
     }
 
-    function pickWinner() restricted candidatesLimit view returns (/*string*/uint) {
+    function pickWinner() restricted canditatesLimit view returns (/*string*/uint) {
         uint winner;
         uint max= 0;
-        for(uint i=0; i < candidatesCount; i++){
-            Candidates storage candidate = candidates[i];
-            if(candidate.votingCounts > max){
+        for(uint i=0; i < canditatesCount; i++){
+            Canditates storage canditate = canditates[i];
+            if(canditate.votingCounts > max){
                 winner = i;
             }
         }
@@ -96,6 +105,20 @@ contract Election {
         return (winnerCandidate.name);
         */
         return winner;
+    }
+
+    function getCanditatesSummary(uint index) public view returns ( string, string, string, uint ) {
+      Canditates storage canditate = canditates[index];
+      return (
+          canditate.name,
+          canditate.partyName,
+          canditate.description,
+          canditate.votingCounts
+      );
+    }
+
+    function getCanditatesCount() public view returns (uint) {
+      return canditates.length;
     }
 
 }

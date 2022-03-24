@@ -1,20 +1,57 @@
 import React, { Component } from "react";
-import { Button } from "semantic-ui-react";
+import { Button, Card, Group, Image } from "semantic-ui-react";
 import Layout from "../../components/Layout";
 import { Link } from "../../routes";
 import Election from "../../ethereum/election";
+import CanditatesRow from "../../components/Canditates-List";
+import web3 from "../../ethereum/web3";
 
 class ShowCanditates extends Component {
   static async getInitialProps(props) {
     const { address } = props.query;
-    return { address };
+    const election = Election(address);
+    const canditatesCount = await election.methods.getCanditatesCount().call();
+
+    const canditates = await Promise.all(
+      Array(parseInt(canditatesCount))
+        .fill()
+        .map((element, index) => {
+          return election.methods.canditates(index).call();
+        })
+    );
+
+    return { address, canditates, canditatesCount };
+  }
+
+  onRegister = async () => {
+    const election = Election(this.props.address);
+    const accounts = await web3.eth.getAccounts();
+    await election.methods.register().send({
+      from: accounts[0],
+    });
+  };
+
+  renderRows() {
+    return this.props.canditates.map((canditate, index) => {
+      return (
+        <CanditatesRow
+          key={index}
+          id={index}
+          address={this.props.address}
+          canditate={canditate}
+          name={canditate.name}
+          description={canditate.description}
+          partyName={canditate.partyName}
+        />
+      );
+    });
   }
 
   render() {
     return (
       <Layout>
         <div>
-          <h3>Candidates</h3>
+          <h3>Canditates</h3>
           <Link route={`/elections/${this.props.address}/create-canditates`}>
             <a>
               <Button
@@ -25,6 +62,13 @@ class ShowCanditates extends Component {
               />
             </a>
           </Link>
+          <Button
+            style={{ marginBottom: "20px" }}
+            content="Register"
+            primary
+            onClick={this.onRegister}
+          />
+          {this.renderRows()}
         </div>
       </Layout>
     );

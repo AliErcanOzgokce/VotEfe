@@ -46,7 +46,7 @@ class CampaignNew extends Component {
               value={this.state.name}
               onChange={(event) => this.setState({ name: event.target.value })}
             />
-            <label>Candidates Count</label>
+            <label>Canditates Count</label>
             <Input
               labelPosition="right"
               value={this.state.count}

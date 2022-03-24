@@ -8,16 +8,16 @@ import { Link } from "../routes";
 class ElectionIndex extends Component {
   static async getInitialProps() {
     const elections = await factory.methods.getDeployedElections().call();
+    const names = await factory.methods.getDeployedElectionNames().call();
 
-
-    return { elections };
+    return { elections, names };
   }
-
 
   renderElections() {
     const items = this.props.elections.map((address) => {
       return {
-        header: address,
+        header: this.props.names,
+        meta: address,
         description: (
           <Link route={`/elections/${address}`}>
             <a>View Election</a>

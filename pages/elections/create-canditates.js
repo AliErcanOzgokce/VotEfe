@@ -7,6 +7,12 @@ import { Router } from "../../routes";
 import Election from "../../ethereum/election";
 
 class CreateCanditates extends Component {
+  static async getInitialProps(props) {
+    const { address } = props.query;
+    const election = Election(address);
+
+    return { election, address };
+  }
   state = {
     name: "",
     partyName: "",
@@ -17,14 +23,14 @@ class CreateCanditates extends Component {
 
   onSubmit = async (event) => {
     event.preventDefault();
-
+    const election = Election(this.props.address);
     this.setState({ loading: true, errorMessage: "" });
 
     try {
       const accounts = await web3.eth.getAccounts();
 
-      await factory.methods
-        .createCanditate(
+      await election.methods
+        .createCantitate(
           this.state.name,
           this.state.partyName,
           this.state.description
@@ -42,37 +48,42 @@ class CreateCanditates extends Component {
   render() {
     return (
       <Layout>
-        <h3>Create Candidates</h3>
-        <Form onSubmit={this.onSubmit} error={!!this.state.errorMessage}>
-          <Form.Field>
-            <label>Candidate Name</label>
-            <Input
+        <div>
+          <h3>Create Canditates</h3>
+          <Form onSubmit={this.onSubmit} error={!!this.state.errorMessage}>
+            <Form.Field>
+              <label>Canditate Name</label>
+              <Input
+                labelPosition="right"
+                value={this.state.name}
+                onChange={(event) =>
+                  this.setState({ name: event.target.value })
+                }
+                style={{ marginBottom: "15px" }}
+              />
+              <label>Canditate Party Name</label>
+              <Input
+                labelPosition="right"
+                value={this.state.partyName}
+                onChange={(event) =>
+                  this.setState({ partyName: event.target.value })
+                }
+              />
+            </Form.Field>
+            <Form.TextArea
+              label="Description"
               labelPosition="right"
-              value={this.state.name}
-              onChange={(event) => this.setState({ name: event.target.value })}
-            />
-            <label>Candidate Party Name</label>
-            <Input
-              labelPosition="right"
-              value={this.state.partyName}
+              value={this.state.description}
               onChange={(event) =>
-                this.setState({ partyName: event.target.value })
+                this.setState({ description: event.target.value })
               }
             />
-          </Form.Field>
-          <Form.TextArea
-            label="Description"
-            labelPosition="right"
-            value={this.state.description}
-            onChange={(event) =>
-              this.setState({ description: event.target.value })
-            }
-          />
-          <Message error header="Oops!" content={this.state.errorMessage} />
-          <Button loading={this.state.loading} primary>
-            Create a Candidate
-          </Button>
-        </Form>
+            <Message error header="Oops!" content={this.state.errorMessage} />
+            <Button loading={this.state.loading} primary>
+              Create a Canditate
+            </Button>
+          </Form>
+        </div>
       </Layout>
     );
   }
