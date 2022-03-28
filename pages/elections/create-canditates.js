@@ -1,6 +1,14 @@
 import React, { Component } from "react";
 import Layout from "../../components/Layout";
-import { Form, Button, Input, Message } from "semantic-ui-react";
+import {
+  Form,
+  Button,
+  Input,
+  Message,
+  Segment,
+  Header,
+  Icon,
+} from "semantic-ui-react";
 import factory from "../../ethereum/factory";
 import web3 from "../../ethereum/web3";
 import { Router } from "../../routes";
@@ -79,7 +87,11 @@ class CreateCanditates extends Component {
               }
             />
             <Message error header="Oops!" content={this.state.errorMessage} />
-            <Button loading={this.state.loading} primary>
+            <Button
+              style={{ marginTop: "15px" }}
+              loading={this.state.loading}
+              primary
+            >
               Create a Canditate
             </Button>
           </Form>

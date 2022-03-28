@@ -34,15 +34,15 @@ class ShowCanditates extends Component {
   renderRows() {
     return this.props.canditates.map((canditate, index) => {
       return (
-        <CanditatesRow
-          key={index}
-          id={index}
-          address={this.props.address}
-          canditate={canditate}
-          name={canditate.name}
-          description={canditate.description}
-          partyName={canditate.partyName}
-        />
+          <CanditatesRow
+            key={index}
+            id={index}
+            address={this.props.address}
+            canditate={canditate}
+            name={canditate.name}
+            description={canditate.description}
+            partyName={canditate.partyName}
+          />
       );
     });
   }
@@ -69,6 +69,16 @@ class ShowCanditates extends Component {
             onClick={this.onRegister}
           />
           {this.renderRows()}
+          <Link route={`/elections/${this.props.address}/view-status`}>
+            <a>
+              <Button
+                style={{ marginTop: "20px" }}
+                floated="left"
+                content="View Status"
+                primary
+              />
+            </a>
+          </Link>
         </div>
       </Layout>
     );

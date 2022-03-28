@@ -8,7 +8,7 @@ class CanditatesRow extends Component {
     const election = Election(this.props.address);
     const accounts = await web3.eth.getAccounts();
     await election.methods.voteCanditate(this.props.id).send({
-      from: accounts[0]
+      from: accounts[0],
     });
   };
 
@@ -18,17 +18,15 @@ class CanditatesRow extends Component {
     return (
       <Card.Group>
         <Card>
-          <Card.Content>
+          <Card.Content extra>
             <Image
-              floated="right"
+              floated="left"
               size="big"
-              src="https://react.semantic-ui.com/images/avatar/large/jenny.jpg"
+              src="https://react.semantic-ui.com/images/avatar/large/elliot.jpg"
             />
             <Card.Header>{canditate.name}</Card.Header>
             <Card.Meta>{canditate.partyName}</Card.Meta>
-            <Card.Description>
-              {canditate.description}
-            </Card.Description>
+            <Card.Description>{canditate.description}</Card.Description>
           </Card.Content>
           <Card.Content extra>
             <div className="ui two buttons">
