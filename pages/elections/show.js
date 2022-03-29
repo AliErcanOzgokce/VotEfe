@@ -68,7 +68,9 @@ class ShowCanditates extends Component {
             primary
             onClick={this.onRegister}
           />
+          <Card.Group>
           {this.renderRows()}
+          </Card.Group>
           <Link route={`/elections/${this.props.address}/view-status`}>
             <a>
               <Button

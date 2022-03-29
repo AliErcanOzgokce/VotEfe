@@ -16,7 +16,6 @@ class CanditatesRow extends Component {
     const { canditate } = this.props;
 
     return (
-      <Card.Group>
         <Card>
           <Card.Content extra>
             <Image
@@ -36,7 +35,6 @@ class CanditatesRow extends Component {
             </div>
           </Card.Content>
         </Card>
-      </Card.Group>
     );
   }
 }
