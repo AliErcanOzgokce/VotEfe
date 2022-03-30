@@ -3,14 +3,16 @@ import Layout from "../../components/Layout";
 import CanditatesVoteRow from "../../components/Canditates-Votes";
 import Election from "../../ethereum/election";
 import web3 from "../../ethereum/web3";
-import { Table, Button } from "semantic-ui-react";
+import { Table, Button, Progress, Segment, Header } from "semantic-ui-react";
 import { Link } from "../../routes";
+import Chart from "../../components/Chart";
 
 class ElectionStatus extends Component {
   static async getInitialProps(props) {
     const { address } = props.query;
     const election = Election(address);
     const canditatesCount = await election.methods.getCanditatesCount().call();
+    const votersCount = await election.methods.votersCount().call();
 
     const canditates = await Promise.all(
       Array(parseInt(canditatesCount))
@@ -20,7 +22,7 @@ class ElectionStatus extends Component {
         })
     );
 
-    return { address, canditates, canditatesCount };
+    return { address, canditates, canditatesCount, votersCount };
   }
 
   renderRows() {
@@ -39,6 +41,21 @@ class ElectionStatus extends Component {
     });
   }
 
+  renderChart() {
+    return this.props.canditates.map((canditate, index) => {
+      return (
+        <Chart
+          key={index}
+          canditate={canditate}
+          name={canditate.name}
+          partyName={canditate.partyName}
+          votingCounts={canditate.votingCounts}
+          votersCount={this.props.votersCount}
+        />
+      );
+    });
+  }
+
   render() {
     const { Header, Row, HeaderCell, Body } = Table;
 
@@ -46,7 +63,7 @@ class ElectionStatus extends Component {
       <Layout>
         <div>
           <h3>Election Status</h3>
-
+          <Segment>{this.renderChart()}</Segment>
           <Table>
             <Header>
               <Row>
@@ -60,7 +77,7 @@ class ElectionStatus extends Component {
           </Table>
           <Link route={`/elections/${this.props.address}/show-winner`}>
             <a>
-              <Button primary>Finalize Election</Button>
+              <Button icon="winner" primary content="Finalize Election" />
             </a>
           </Link>
         </div>

@@ -34,15 +34,15 @@ class ShowCanditates extends Component {
   renderRows() {
     return this.props.canditates.map((canditate, index) => {
       return (
-          <CanditatesRow
-            key={index}
-            id={index}
-            address={this.props.address}
-            canditate={canditate}
-            name={canditate.name}
-            description={canditate.description}
-            partyName={canditate.partyName}
-          />
+        <CanditatesRow
+          key={index}
+          id={index}
+          address={this.props.address}
+          canditate={canditate}
+          name={canditate.name}
+          description={canditate.description}
+          partyName={canditate.partyName}
+        />
       );
     });
   }
@@ -65,17 +65,17 @@ class ShowCanditates extends Component {
           <Button
             style={{ marginBottom: "20px" }}
             content="Register"
+            icon="edit"
             primary
             onClick={this.onRegister}
           />
-          <Card.Group>
-          {this.renderRows()}
-          </Card.Group>
+          <Card.Group>{this.renderRows()}</Card.Group>
           <Link route={`/elections/${this.props.address}/view-status`}>
             <a>
               <Button
                 style={{ marginTop: "20px" }}
                 floated="left"
+                icon="chart bar"
                 content="View Status"
                 primary
               />
