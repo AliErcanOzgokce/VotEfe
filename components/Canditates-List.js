@@ -13,28 +13,31 @@ class CanditatesRow extends Component {
   };
 
   render() {
-    const { canditate } = this.props;
+    const { canditate, complete } = this.props;
 
     return (
-        <Card>
-          <Card.Content extra>
-            <Image
-              floated="left"
-              size="big"
-              src="https://react.semantic-ui.com/images/avatar/large/elliot.jpg"
-            />
-            <Card.Header>{canditate.name}</Card.Header>
-            <Card.Meta>{canditate.partyName}</Card.Meta>
-            <Card.Description>{canditate.description}</Card.Description>
-          </Card.Content>
-          <Card.Content extra>
-            <div className="ui two buttons">
+      <Card disabled={complete} positive={!complete}>
+        <Card.Content extra>
+          <Image
+            floated="left"
+            size="big"
+            src="https://react.semantic-ui.com/images/avatar/large/elliot.jpg"
+          />
+          <Card.Header>{canditate.name}</Card.Header>
+          <Card.Meta>{canditate.partyName}</Card.Meta>
+          <Card.Description>{canditate.description}</Card.Description>
+        </Card.Content>
+
+        <Card.Content extra>
+          <div className="ui two buttons">
+            {complete ? null :(
               <Button basic color="green" onClick={this.onVote}>
                 Vote
               </Button>
-            </div>
-          </Card.Content>
-        </Card>
+            )}
+          </div>
+        </Card.Content>
+      </Card>
     );
   }
 }

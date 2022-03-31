@@ -30,7 +30,9 @@ class ElectionStatus extends Component {
         })
     );
 
-    return { address, canditates, canditatesCount, votersCount };
+    const complete = await election.methods.electionCompleted().call();
+
+    return { address, canditates, canditatesCount, votersCount, complete };
   }
 
   state = {
@@ -89,12 +91,15 @@ class ElectionStatus extends Component {
 
   render() {
     const { Header, Row, HeaderCell, Body } = Table;
+    const { complete } = this.props;
 
     return (
       <Layout>
         <div>
           <h3>Election Status</h3>
-          <Segment>{this.renderChart()}</Segment>
+          <Segment>
+            {this.renderChart()}
+          </Segment>
           <Table>
             <Header>
               <Row>
@@ -108,12 +113,17 @@ class ElectionStatus extends Component {
           </Table>
           <Form onSubmit={this.onPickWinner} error={!!this.state.errorMessage}>
             <Message error header="Oops!" content={this.state.errorMessage} />
+            {complete ? null :
             <Button
               loading={this.state.loading}
               icon="winner"
               primary
               content="Finalize Election"
             />
+            }
+            {!complete ? null : <Link route={`/elections/${this.props.address}/show-winner`}>
+              <Button>Show Winner</Button>
+            </Link>}
           </Form>
         </div>
       </Layout>

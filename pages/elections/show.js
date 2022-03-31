@@ -20,7 +20,9 @@ class ShowCanditates extends Component {
         })
     );
 
-    return { address, canditates, canditatesCount };
+    const complete = await election.methods.electionCompleted().call();
+
+    return { address, canditates, canditatesCount, complete };
   }
 
   onRegister = async () => {
@@ -35,6 +37,7 @@ class ShowCanditates extends Component {
     return this.props.canditates.map((canditate, index) => {
       return (
         <CanditatesRow
+          complete= {this.props.complete}
           key={index}
           id={index}
           address={this.props.address}

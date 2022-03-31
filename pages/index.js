@@ -3,6 +3,7 @@ import factory from "../ethereum/factory";
 import Layout from "../components/Layout";
 import { Card, Button } from "semantic-ui-react";
 import { Link } from "../routes";
+import Election from "../ethereum/election";
 
 
 class ElectionIndex extends Component {
@@ -14,14 +15,16 @@ class ElectionIndex extends Component {
   }
 
   renderElections() {
-    const items = this.props.elections.map((address) => {
+    const items = this.props.elections.map((address, index) => {
       return {
-        header: this.props.names,
+        header: this.props.names[index],
         meta: address,
         description: (
+          <div>
           <Link route={`/elections/${address}`}>
             <a>View Election</a>
           </Link>
+          </div>
         ),
         fluid: true,
       };
