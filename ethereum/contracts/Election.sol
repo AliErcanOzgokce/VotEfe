@@ -40,6 +40,7 @@ contract Election {
     address public manager;
     uint public votersCount;
     mapping(address => bool) public voters;
+    bool public electionCompleted;
 
     modifier restricted() {
         require (msg.sender == manager);
@@ -91,22 +92,46 @@ contract Election {
         canditate.votingCounts++;
     }
 
-    function pickWinner() restricted canditatesLimit view returns (/*string*/uint) {
-        uint winner;
+    //In here winner picking
+    function pickWinner() public restricted canditatesLimit returns(uint) {
+        uint n;
         uint max= 0;
         for(uint i=0; i < canditatesCount; i++){
-            Canditates storage canditate = canditates[i];
+            Canditates memory canditate = canditates[i];
             if(canditate.votingCounts > max){
-                winner = i;
+                n = i;
             }
         }
         /*
         Candidates storage winnerCandidate = candidates[winner];
         return (winnerCandidate.name);
         */
-        return winner;
+        electionCompleted = true;
+        Canditates storage winnerCanditate = canditates[n];
+        winnerCanditate.winner = true;
+        return n;
     }
 
+    function getWinnerSummary() public view returns (string, string, string, uint) {
+        uint m;
+
+        for(uint i=0; i < canditatesCount; i++){
+            Canditates memory canditate = canditates[i];
+            if(canditate.winner == true){
+                m = i;
+            }
+        }
+
+        Canditates memory _winnerCanditate = canditates[m];
+
+        return (
+          _winnerCanditate.name,
+          _winnerCanditate.partyName,
+          _winnerCanditate.description,
+          _winnerCanditate.votingCounts
+        );
+    }
+    //It's for clients
     function getCanditatesSummary(uint index) public view returns ( string, string, string, uint ) {
       Canditates storage canditate = canditates[index];
       return (
@@ -116,7 +141,7 @@ contract Election {
           canditate.votingCounts
       );
     }
-
+    //It's for clients too
     function getCanditatesCount() public view returns (uint) {
       return canditates.length;
     }

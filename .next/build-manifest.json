@@ -35,6 +35,11 @@
       "static/chunks/main.js",
       "static/chunks/pages/elections/show.js"
     ],
+    "/elections/show-winner": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/elections/show-winner.js"
+    ],
     "/elections/status": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",

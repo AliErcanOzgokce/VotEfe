@@ -3,8 +3,16 @@ import Layout from "../../components/Layout";
 import CanditatesVoteRow from "../../components/Canditates-Votes";
 import Election from "../../ethereum/election";
 import web3 from "../../ethereum/web3";
-import { Table, Button, Progress, Segment, Header } from "semantic-ui-react";
-import { Link } from "../../routes";
+import {
+  Table,
+  Button,
+  Progress,
+  Segment,
+  Header,
+  Message,
+  Form,
+} from "semantic-ui-react";
+import { Router, Link } from "../../routes";
 import Chart from "../../components/Chart";
 
 class ElectionStatus extends Component {
@@ -24,6 +32,29 @@ class ElectionStatus extends Component {
 
     return { address, canditates, canditatesCount, votersCount };
   }
+
+  state = {
+    errorMessage: "",
+    loading: false,
+  };
+
+  onPickWinner = async (event) => {
+    event.preventDefault();
+
+    this.setState({ loading: true, errorMessage: "" });
+
+    try {
+      const election = Election(this.props.address);
+      const accounts = await web3.eth.getAccounts();
+
+      await election.methods.pickWinner().send({
+        from: accounts[0],
+      });
+      Router.pushRoute(`/elections/${this.props.address}/show-winner`);
+    } catch (err) {
+      this.setState({ errorMessage: err.message });
+    }
+  };
 
   renderRows() {
     return this.props.canditates.map((canditate, index) => {
@@ -75,11 +106,15 @@ class ElectionStatus extends Component {
             </Header>
             <Body>{this.renderRows()}</Body>
           </Table>
-          <Link route={`/elections/${this.props.address}/show-winner`}>
-            <a>
-              <Button icon="winner" primary content="Finalize Election" />
-            </a>
-          </Link>
+          <Form onSubmit={this.onPickWinner} error={!!this.state.errorMessage}>
+            <Message error header="Oops!" content={this.state.errorMessage} />
+            <Button
+              loading={this.state.loading}
+              icon="winner"
+              primary
+              content="Finalize Election"
+            />
+          </Form>
         </div>
       </Layout>
     );
