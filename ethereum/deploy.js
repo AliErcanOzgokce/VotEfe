@@ -3,9 +3,9 @@ const Web3 = require('web3');
 const compiledFactory = require('./build/ElectionFactory.json');
 
 const provider = new HDWalletProvider(
-  'flip reason worth risk attend swift absorb broken cup gym similar pet',
+  'ADD YOUR 12 word mnemonic',
   // remember to change this to your own phrase!
-  'https://rinkeby.infura.io/v3/ec9f3e96955841299338d411a8d96e05'
+  'ADD YOUR infura http web provider address'
   // remember to change this to your own endpoint!
 );
 const web3 = new Web3(provider);
