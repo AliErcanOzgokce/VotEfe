@@ -8,7 +8,7 @@ VotEfe is a smart contract that allows you to create elections on the blockchain
   <img src="https://ibb.co/Dw9rSXb">
   <img src="https://ibb.co/5j2wX73">
   <img src="https://ibb.co/yXGRzLP">
-  <a href="https://ibb.co/rZHsvg8"><img src="https://i.ibb.co/2jdN5wV/Screen-Shot-2022-04-01-at-16-42-22-1.png" alt="Screen-Shot-2022-04-01-at-16-42-22-1" border="0"></a>
+  <img src="https://i.ibb.co/mH48SmZ/Screen-Shot-2022-04-01-at-16-42-22-1.png" alt="Screen-Shot-2022-04-01-at-16-42-22-1" border="0">
 </p>
 
 # :gift: Installation:
