@@ -30,16 +30,19 @@ contract Election {
         string partyName;
         uint votingCounts;
         bool winner;
-        mapping(address => bool) voters;
+    }
+
+    struct Voters {
+        bool voted;
+        bool avaibleVote;
     }
 
     Canditates[] public canditates;
     string public electionName;
-    mapping(address => uint) public avaibleVote;
     uint public canditatesCount;
     address public manager;
     uint public votersCount;
-    mapping(address => bool) public voters;
+    mapping(address => Voters) public voters;
     bool public electionCompleted;
 
     modifier restricted() {
@@ -59,12 +62,11 @@ contract Election {
     }
 
     function register () public {
-        require(!voters[msg.sender]);
-        require(!(avaibleVote[msg.sender]==1)); //That means he/she registered but not voted yet
-        require(!(avaibleVote[msg.sender]==2)); //That means he/she registered and voted
-        voters[msg.sender] = true;
+        require(voters[msg.sender].avaibleVote==false);
+        require(voters[msg.sender].voted==false);
 
-        avaibleVote[msg.sender]=1;
+        voters[msg.sender].avaibleVote = true;
+
         votersCount++;
     }
 
@@ -83,12 +85,11 @@ contract Election {
 
     function voteCanditate (uint index) public {
         Canditates storage canditate = canditates[index];
+        require(voters[msg.sender].voted==false);
+        require(voters[msg.sender].avaibleVote==true);
 
-        require(voters[msg.sender]);
-        require(!canditate.voters[msg.sender]);
-
-        canditate.voters[msg.sender] = true;
-        avaibleVote[msg.sender] = 2;
+        voters[msg.sender].avaibleVote = false;
+        voters[msg.sender].voted = true;
         canditate.votingCounts++;
     }
 

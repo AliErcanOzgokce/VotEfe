@@ -30,20 +30,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/elections/show": [
+    "/elections/new": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/elections/show.js"
-    ],
-    "/elections/show-winner": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/elections/show-winner.js"
-    ],
-    "/elections/status": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/elections/status.js"
+      "static/chunks/pages/elections/new.js"
     ]
   },
   "ampFirstPages": []

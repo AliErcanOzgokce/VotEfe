@@ -122,7 +122,7 @@ class ElectionStatus extends Component {
             />
             }
             {!complete ? null : <Link route={`/elections/${this.props.address}/show-winner`}>
-              <Button>Show Winner</Button>
+              <Button icon="chess king" content="Show Winner"/>
             </Link>}
           </Form>
         </div>

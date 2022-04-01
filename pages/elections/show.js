@@ -65,6 +65,16 @@ class ShowCanditates extends Component {
               />
             </a>
           </Link>
+          <Link route={`/elections/${this.props.address}/view-status`}>
+            <a>
+              <Button
+                floated="right"
+                icon="chart bar"
+                content="View Status"
+                primary
+              />
+            </a>
+          </Link>
           <Button
             style={{ marginBottom: "20px" }}
             content="Register"
@@ -80,7 +90,6 @@ class ShowCanditates extends Component {
                 floated="left"
                 icon="chart bar"
                 content="View Status"
-                primary
               />
             </a>
           </Link>

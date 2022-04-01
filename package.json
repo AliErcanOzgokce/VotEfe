@@ -1,9 +1,12 @@
 {
+  "homepage": "http://aliercanozgokce.github.io/VotEfe",
   "name": "election",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "test": "mocha",
     "dev": "node server.js"
   },
@@ -29,5 +32,8 @@
     "solc": "^0.4.17",
     "styled-components": "^5.3.5",
     "web3": "^1.7.0"
+  },
+  "devDependencies": {
+    "gh-pages": "^3.2.3"
   }
 }
