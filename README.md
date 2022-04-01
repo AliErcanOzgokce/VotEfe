@@ -16,15 +16,39 @@ Note: When u finalize the election nobody can't make vote again. Before the make
 - Node.js
 - React.js
 - Next.js
+- Some money in wallet address to create a contract
 
-# Usage
-For starting the VotEfe
+# Configure
+Go to the /ethereum/deploy.js file
+
+```bash
+const provider = new HDWalletProvider(
+  'ADD YOUR 12 word mnemonic',
+  // remember to change this to your own phrase!
+  'ADD YOUR infura http web provider address'
+  // remember to change this to your own endpoint!
+);
+```
+add your 12 word mnemonic and your http web provider link (i used infura)
+
+```bash
+node deploy.js
+```
+Copy the contarct address then go to this file /ethereum/factory.js
+```bash
+const instance = new web3.eth.Contract(
+  JSON.parse(ElectionFactory.interface),
+  'CHANGE HERE TO YOUR CONTRACT ADDRESS'
+);
+```
+paste the contract address here
+
+
+Start the VotEfe
 
 ```bash
 npm run dev
 ```
-
-After starting go to there
 
 http://localhost:3000/
 
