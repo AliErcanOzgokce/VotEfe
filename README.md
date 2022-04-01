@@ -15,10 +15,12 @@ VotEfe is a smart contract that allows you to create elections on the blockchain
   <h3>Show The Winner</h3>
   <img src="https://i.ibb.co/mH48SmZ/Screen-Shot-2022-04-01-at-16-42-22-1.png" alt="Screen-Shot-2022-04-01-at-16-42-22-1" border="0">
 </p>
+
 # How To Use?
 First, you should create a election on "create-elections" page. Then you can create a canditates from "create-canditates" page <b>(Only the person who has created the election can create canditates)</b>. Also before make voting you should register first. You can check the current election status on "election-status" page and you can finalize the election <b>(Only the person who has created the election can finalize)</b>. After the finalize election you can check the winner with "show-winner" button.
 
 Note: When u finalize the election nobody can't make vote again. Before the make votement you should registered first. Only the manager (The person who created the election) can finalize election and create canditates. 
+
 # :gift: Installation:
 
 
